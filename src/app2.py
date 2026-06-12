@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body
-from movie import Movie
+from movie import Movie, MovieRequest
+from helper import give_next_proper_id
 
 app = FastAPI()
 
@@ -19,6 +20,7 @@ def get_all_movies():
 
 
 @app.post("/create-movie")
-def create_movie(movie_request=Body()):
+def create_movie(movie_request: MovieRequest):
     """this api endpoint is to create a movie"""
-    MOVIES.append(movie_request)
+    new_movie = Movie(**movie_request.model_dump())
+    MOVIES.append(give_next_proper_id(MOVIES, new_movie))

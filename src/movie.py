@@ -1,3 +1,7 @@
+from pydantic import BaseModel, Field
+from typing import Optional
+
+
 class Movie:
     id: int
     title: str
@@ -13,3 +17,12 @@ class Movie:
         self.category = category
         self.description = description
         self.rating = rating
+
+
+class MovieRequest(BaseModel):
+    id: Optional[int] = None
+    title: str = Field(min_length=3)
+    author: str = Field(min_length=3)
+    category:str = Field(min_length=3)
+    description: str = Field(min_length=3, max_length=100)
+    rating: int = Field(gt=-1, lt=6)
