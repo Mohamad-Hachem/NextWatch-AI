@@ -19,6 +19,42 @@ def get_all_movies():
     return MOVIES
 
 
+@app.get("/movies/{movie_id}")
+def get_movie(movie_id: int):
+    """this api endpoint to return a specific movie"""
+    for movie in MOVIES:
+        if movie.id == movie_id:
+            return movie
+    return "No movies found"
+
+
+@app.get("/movies/")
+def get_movies_with_specific_rating(movie_rating: int):
+    """this api endpoint to fet movies with specific reading"""
+    final_movies_list = []
+    for movie in MOVIES:
+        if movie.rating == movie_rating:
+            final_movies_list.append(movie)
+    return final_movies_list
+
+
+@app.put("/movies/update_movie")
+def update_movie(movie: MovieRequest):
+    """updating a book with a specific ID"""
+    for i in range(len(MOVIES)):
+        if MOVIES[i].id == movie.id:
+            MOVIES[i] = Movie(**movie.model_dump())
+
+
+@app.delete("/movies/{movie_id}")
+def delete_movie(movie_id :int):
+    """this api is to delete a movie with a specific movie_id"""
+    for i in range(len(MOVIES)):
+        if MOVIES[i].id == movie_id:
+            MOVIES.pop(i)
+            break
+
+
 @app.post("/create-movie")
 def create_movie(movie_request: MovieRequest):
     """this api endpoint is to create a movie"""
