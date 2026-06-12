@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from movie import Movie
 
 app = FastAPI()
@@ -16,3 +16,9 @@ MOVIES = [
 def get_all_movies():
     """this api endpoint to return all movies"""
     return MOVIES
+
+
+@app.post("/create-movie")
+def create_movie(movie_request=Body()):
+    """this api endpoint is to create a movie"""
+    MOVIES.append(movie_request)
