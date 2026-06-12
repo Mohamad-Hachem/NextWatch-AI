@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 from movie import Movie, MovieRequest
 from helper import give_next_proper_id
+
 
 app = FastAPI()
 
@@ -20,7 +21,7 @@ def get_all_movies():
 
 
 @app.get("/movies/{movie_id}")
-def get_movie(movie_id: int):
+def get_movie(movie_id: int= Path(gt=0)):
     """this api endpoint to return a specific movie"""
     for movie in MOVIES:
         if movie.id == movie_id:
@@ -47,7 +48,7 @@ def update_movie(movie: MovieRequest):
 
 
 @app.delete("/movies/{movie_id}")
-def delete_movie(movie_id :int):
+def delete_movie(movie_id :int= Path(gt=0)):
     """this api is to delete a movie with a specific movie_id"""
     for i in range(len(MOVIES)):
         if MOVIES[i].id == movie_id:
