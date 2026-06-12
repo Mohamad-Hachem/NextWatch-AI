@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 from movie import Movie, MovieRequest
 from helper import give_next_proper_id
 

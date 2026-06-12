@@ -20,9 +20,21 @@ class Movie:
 
 
 class MovieRequest(BaseModel):
-    id: Optional[int] = None
+    id: Optional[int] = Field(description="we don't need an id it is auto increment", default=None)
     title: str = Field(min_length=3)
     author: str = Field(min_length=3)
     category:str = Field(min_length=3)
     description: str = Field(min_length=3, max_length=100)
     rating: int = Field(gt=-1, lt=6)
+
+    model_config = {
+        'json_schema_extra':{
+            "example":{
+                "title": "this is the title of the movie",
+                "author": "author of the movie",
+                "category": "category of the movie",
+                "description": "description of the movie",
+                "rating": 5
+            }
+        }
+    }
