@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, Path, Query
 from movie import Movie, MovieRequest
 from helper import give_next_proper_id
 
@@ -30,7 +30,7 @@ def get_movie(movie_id: int= Path(gt=0)):
 
 
 @app.get("/movies/")
-def get_movies_with_specific_rating(movie_rating: int):
+def get_movies_with_specific_rating(movie_rating: int= Query(gt=-1,lt=6)):
     """this api endpoint to fet movies with specific reading"""
     final_movies_list = []
     for movie in MOVIES:
