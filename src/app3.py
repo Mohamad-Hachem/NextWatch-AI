@@ -64,3 +64,15 @@ def update_movie(db: db_dependency, movie_request: MovieRequest, movie_id: int =
 
     db.add(movie)
     db.commit()
+
+
+@app.delete("/movies/delete/{movie_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_movie_by_id(db: db_dependency, movie_id: int = Path(gt=0)):
+    """this api endpoint is to delete movies from database"""
+    movie = db.query(Movies).filter(Movies.id == movie_id).first()
+
+    if movie:
+        db.query(Movies).filter(Movies.id == movie_id).delete()
+        db.commit()
+    else:
+        raise HTTPException(status_code=404, detail="there is no such movie to delete")
